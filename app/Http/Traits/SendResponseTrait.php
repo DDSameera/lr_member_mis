@@ -14,7 +14,7 @@ trait SendResponseTrait
     {
 
         $response = [
-            'success' => true,
+            'status' => true,
             'message' => $message
         ];
 
@@ -24,13 +24,13 @@ trait SendResponseTrait
 
     }
 
-    public static function sendError($errors, $message,$status_code)
+    public static function sendError( $message,$status_code)
     {
 
         $response = [
-            'success' => false,
+            'status' => false,
             'message' => $message,
-            'errors' => $errors,
+
 
         ];
 

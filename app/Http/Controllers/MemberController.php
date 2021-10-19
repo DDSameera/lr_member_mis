@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Facades\MemberFacade;
 use App\Http\Requests\MemberRequest;
-
 use App\Http\Traits\SendResponseTrait;
 use App\User;
-use Illuminate\Support\Facades\Hash;
+
 
 
 class MemberController extends Controller
@@ -49,22 +49,13 @@ class MemberController extends Controller
      */
     public function store(MemberRequest $request)
     {
-        $user = User::create([
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password'))
-        ]);
+        $userData = $request->all();
+        if (MemberFacade::addMember($userData)){
+           return SendResponseTrait::sendSuccess('Member Created successfully',200);
+        }else{
+           return SendResponseTrait::sendError('Member Created successfully',200);
+        }
 
-        $user->profile()->create([
-            'first_name' => $request->get('firstName'),
-            'last_name' => $request->get('lastName'),
-            'dob' => $request->get('dob'),
-            'gender' => $request->get('gender'),
-            'contact_no' => $request->get('contactNo'),
-
-        ]);
-
-
-        SendResponseTrait::sendSuccess('Member Created successfully',200);
 
     }
 
@@ -87,7 +78,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        $user = User::with('profile')->findOrFail($id);
+        $user = MemberFacade::getMemberDetails($id);
 
         return response()->json($user);
     }
@@ -102,39 +93,13 @@ class MemberController extends Controller
     public function update(MemberRequest $request, $id)
     {
 
-
-          $user = User::find($id);
-
-
-         if(!empty($request->get('password'))){
-             $user->update([
-                 'email'=>$request->get('email'),
-                 'password'=> Hash::make($request->get('password'))
-             ]);
-         }else{
-             $user->update([
-                 'email'=>$request->get('email'),
-             ]);
-         }
+        if (MemberFacade::updateMember($request->all(),$id)){
+           return SendResponseTrait::sendSuccess('Member Profile Updated successfully',200);
+        }else{
+            return SendResponseTrait::sendError('Member Profile Updated Error',422);
+        }
 
 
-        $user->profile()->update([
-            'first_name' => $request->get('firstName'),
-            'last_name' => $request->get('lastName'),
-            'dob' => $request->get('dob'),
-            'gender' => $request->get('gender'),
-            'contact_no' => $request->get('contactNo'),
-
-        ]);
-
-
-
-        $result = [
-            'status' => true,
-            'message' => 'User Created successfully',
-
-        ];
-        SendResponseTrait::sendSuccess('Member Profile Updated successfully',200);
     }
 
     /**
@@ -145,13 +110,10 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-
-        if (User::find($id)){
-            return  User::find($id)->delete();
-            SendResponseTrait::sendSuccess('Member Profile Deleted successfully',200);
+        if (MemberFacade::deleteMember($id)){
+            return SendResponseTrait::sendSuccess('Member Profile Deleted successfully',200);
         }else{
-            SendResponseTrait::sendSuccess('Member Profile Deleted successfully',200);
+            return SendResponseTrait::sendError('Member Profile Deletion Error',422);
         }
-
     }
 }

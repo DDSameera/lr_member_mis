@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//Route::get('/',function (){
-//    return redirect('member');
-//});
+Route::get('',function (){
+    return redirect('member');
+});
 Auth::routes(['register' => false,'reset'=>false]);
 
 Route::resource('member',MemberController::class);

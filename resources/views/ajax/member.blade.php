@@ -1,8 +1,10 @@
-<!--Script-->
+@include('ajax.helpers')
 <script>
 
 
-
+    /*************************************************
+     * Edit Member Details*
+     ************************************************/
     function editUser(event){
         let url = $(event).data('url');
         let id = $(event).data('id');
@@ -30,15 +32,15 @@
       });
     }
 
+
+    /*************************************************
+     * Update Member Details*
+     ************************************************/
+
     function updateUser(event){
        let id = $(event).data('id');
        let url = "/member/"+id;
-
-
-        let errorClass ='text-danger font-weight-bolder';
-
-        console.log($(event).data('obj'));
-
+       let errorClass ='text-danger font-weight-bolder';
 
         let data = {
             userId : id,
@@ -52,7 +54,7 @@
             contactNo:$("#contact-no").val(),
         };
 
-
+        //Setup Ajax CSRF Token
        setupCSRFToken();
 
         $.ajax({
@@ -65,16 +67,18 @@
 
       .done(function (response) {
 
-            console.log(response);
-            console.log(response.errors);
-            clearValidationErrors();
 
 
+            if (response.status){
+                swal("Good job!", "Record has been updated", "success")
+                    .then((value) => {
+                        location.reload();
+                    });
+            }
 
-            swal("Good job!", "Record has been updated", "success")
-                .then((value) => {
-                    location.reload();
-                });
+          clearValidationErrors();
+
+
              })
       .fail(function (jqXHR) {
 
@@ -101,13 +105,13 @@
     }
 
 
+    /*************************************************
+     * Save Member Details*
+     ************************************************/
+
     function saveUser(event){
         let url = $(event).data('url');
-        let id = $(event).data('id');
         let errorClass ='text-danger font-weight-bolder';
-
-        console.log($(event).data('obj'));
-
 
         let data = {
 
@@ -134,17 +138,20 @@
 
       .done(function (response) {
 
-            console.log(response);
-            console.log(response.errors);
-            clearValidationErrors();
+          //Dispay Bootstrap Alert
+           if (response.status){
+             //Success Alert
+               showAlertMessage(response.message)
 
-            let htmlAlert = "";
-            htmlAlert += "<div class='alert alert-success'>";
-            htmlAlert += response.message;
-            htmlAlert += "</div>";
-            $("form").before(htmlAlert);
+           }else{
+               showAlertMessage("Error Occured")
+           }
 
-            $('form').trigger("reset");
+          //Clear Validation Errors
+          clearValidationErrors();
+
+          //Clear Form
+          $('form').trigger("reset");
 
        })
       .fail(function (jqXHR) {
@@ -177,12 +184,15 @@
     }
 
 
+
+    /*************************************************
+     * Delete Member Details*
+     ************************************************/
+
     function deleteUser(event){
         let url = $(event).data('url');
-        let id = $(event).data('id');
 
-
-
+       //Setup CSRF Token
        setupCSRFToken();
 
        swal({
@@ -204,12 +214,28 @@
 
 
                         .done(function (response) {
+                            // clearValidationErrors();
 
-                            clearValidationErrors();
-                            location.reload();
+                           if (response.status){
+                               swal("Done !", "Record has been deleted", "success")
+                                   .then((value) => {
+                                       location.reload();
+                                   });
+
+
+
+                           }
+
                         })
-                        .fail(function (jqXHR) {
+                        .fail(function (error) {
 
+                                if (!error.responseJSON.status){
+                                    swal("Sorry !", "Something goes wrong . Record  was not deleted", "error")
+                                        .then((value) => {
+                                            location.reload();
+
+                                        });
+                                }
                         })
 
 
@@ -217,28 +243,8 @@
         });
 
 
-
-
-
-
-
     }
-
-
-
-    function clearValidationErrors(){
-        $(".error").remove();
-    }
-
-
-    function setupCSRFToken(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    }
-
 
 </script>
-<!--Script-->
+
+

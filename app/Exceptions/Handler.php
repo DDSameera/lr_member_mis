@@ -53,10 +53,10 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
 
-        // if ($exception instanceof QueryException) {
-        //     return CustomQueryException::render($exception);
-        // } else {
+         if ($exception instanceof QueryException) {
+             return CustomQueryException::render($exception);
+         } else {
             return parent::render($request, $exception);
-       // }
+        }
     }
 }
