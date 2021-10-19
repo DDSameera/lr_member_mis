@@ -27,7 +27,6 @@ composer install
 npm install
 npm audit fix
 npm run dev
-
 ```
 
 ### 3. Set the configurations:
