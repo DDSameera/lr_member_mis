@@ -47,8 +47,8 @@ DB_PASSWORD=
 ```
 
 
-### 3. Application Key Generate
-####Run this command ```php artisan key:generate```
+###  3. Application Key Generate
+#### Run this command ```php artisan key:generate```
 
 ### 5. Run Migration & Seeds
 ```
