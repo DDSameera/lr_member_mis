@@ -1,6 +1,6 @@
 # MEMBER MANAGEMENT SYSTEM (MMS)
 
-`MMS` is PHP Laravel + AJAX Backend Project Develop for CMG.It facilitates to manage Members Management.
+`MMS` is PHP Laravel MSYQL + AJAX Backend Project Develop for CMG.It facilitates to manage Members Management.
 
 ## Prerequisites 
 1. Composer (Latest)
