@@ -31,8 +31,8 @@ npm run dev
 
 ### 3. Set the configurations:
 
-Rename `.env.example` file to `.env`
-Go to `.env` file and add database details
+- Rename `.env.example` file to `.env`
+- Go to `.env` file and add database details
 
 Example
 
