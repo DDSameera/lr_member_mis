@@ -56,7 +56,8 @@ php artisan migrate:fresh --seed
 ```
 ### 6. Start Server
 ### Server IP :  http://127.0.0.1:8000
-
+#### Demo Email : digix.sameera@yahoo.com
+#### Demo Password : hellomaster8120
 ```
 php artisan serve
 ```
