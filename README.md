@@ -60,14 +60,9 @@ php artisan migrate:fresh --seed
 ```
 php artisan serve
 ```
-
+### 7. Clear Cache
+```
+php artisan optimize:clear
+```
 
 That's all
-## Features
-- Secure API Authentication with JWT Token
-- Secured Routes For Product Category
-- Quick Database Migrations
-- Fastest Validations
-- Prevent SQL Injections from Sequelize ORM
-- Unique Secured Token Valid only for specific time period
-
