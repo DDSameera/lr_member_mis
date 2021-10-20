@@ -34,9 +34,8 @@ class MemberRequest extends FormRequest
         $rules =  [
             'firstName' => 'required | string | max:255',
             'lastName' => 'required | string | max:255',
-
-            'dob' => 'required | string | max:255',
-            'gender' => 'required',
+            'dob' => 'required | string | max:255 | date_format:Y-m-d',
+            'gender' => 'required | in:male,female',
             'contactNo' => 'required| string | max:10'
         ];
 

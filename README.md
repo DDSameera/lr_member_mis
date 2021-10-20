@@ -2,7 +2,6 @@
 
 `MMS` is PHP Laravel MSYQL + AJAX Backend Project Develop for CMG.It facilitates to manage Members Management.
 
-![ER Diagram](docs/ER_DIAGRAM.PNG)
 ![ER Diagram](docs/scr1.PNG)
 ![ER Diagram](docs/scr2.PNG)
 ## Prerequisites 

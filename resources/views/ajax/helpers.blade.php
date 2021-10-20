@@ -25,7 +25,7 @@
     function showAlertMessage(message){
         let htmlAlert = "";
         htmlAlert += "<div class='alert alert-success'>";
-        htmlAlert += 'eeeee'
+        htmlAlert += message
         htmlAlert += "</div>";
         $(".card-body").before(htmlAlert);
     }
